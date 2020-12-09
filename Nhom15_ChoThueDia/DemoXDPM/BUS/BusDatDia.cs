@@ -256,5 +256,20 @@ namespace BUS
             }
             return 1;
         }
+
+        //Update 1 hàng đợi bằng mã đĩa (Dùng để update hàng đợi khi thực hiện chức năng xóa đĩa có đĩa chờ)
+        public int CapNhatHangDoiKhiXoaDia(string maDiaCD)
+        {
+            tbThongTinDatTruoc hangDoi = (from n in db.tbThongTinDatTruocs
+                                          where n.MaDiaTam.Equals(maDiaCD)
+                                          select n).FirstOrDefault();
+            if (hangDoi != null)
+            {
+                hangDoi.MaDiaTam = null;
+                db.SubmitChanges();
+                return 1;
+            }
+            return 0;
+        }
     }
 }
